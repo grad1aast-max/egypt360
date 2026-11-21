@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Egypt 360 — Traveller & Partner Survey</title>
+<meta name="description" content="A 5-minute survey to help build Egypt 360, the all-in-one app for visitors to Egypt.">
+<meta property="og:title" content="Egypt 360 — Help us build the app every visitor to Egypt needs">
+<meta property="og:description" content="5-minute anonymous survey for travellers and tourism service providers.">
+<meta name="theme-color" content="#0f3b59">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#0f3b59;--blue2:#0a2a40;--steel:#7d929e;--dust:#dbd4cc;--gold:#dba12c;--coffee:#3e251e;--bg:#f4f1ec;--card:#fff;--err:#b3261e}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--coffee);-webkit-font-smoothing:antialiased}
+.hero{background:radial-gradient(1200px 500px at 80% -10%,#1d5a83 0%,transparent 60%),linear-gradient(160deg,var(--blue) 0%,var(--blue2) 100%);color:#fff;padding:28px 20px 90px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:70px;background:linear-gradient(to top,var(--bg),transparent)}
+.pyr{position:absolute;right:-40px;bottom:10px;width:360px;opacity:.10}
+.wrap{max-width:760px;margin:0 auto;position:relative;z-index:1}
+.logo{display:flex;align-items:center;gap:2px;font-family:Cinzel,serif;font-weight:700;font-size:26px;letter-spacing:3px;color:#fff}
+.logo svg{width:30px;height:30px;margin-left:1px}
+.tag{color:var(--gold);font-size:12px;letter-spacing:3px;text-transform:uppercase;margin-top:4px}
+h1{font-family:Cinzel,serif;font-weight:700;font-size:clamp(26px,5vw,38px);line-height:1.15;margin:34px 0 12px}
+.hero p{color:#d6e1e8;line-height:1.6;max-width:620px;margin:0}
+.progress{height:6px;background:rgba(255,255,255,.15);border-radius:6px;margin-top:26px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),#f0c45e);transition:width .4s}
+.steplabel{font-size:12px;color:#b9c9d4;margin-top:8px;letter-spacing:1px;text-transform:uppercase}
+main{max-width:760px;margin:-60px auto 60px;padding:0 16px;position:relative;z-index:2}
+.card{background:var(--card);border-radius:16px;box-shadow:0 10px 30px rgba(15,59,89,.10);padding:22px;margin-bottom:16px;border:2px solid transparent;transition:border-color .2s}
+.card.missing{border-color:var(--err)}
+.hero.compact h1,.hero.compact p{display:none}.hero.compact{padding-bottom:80px}
+.sec{font-family:Cinzel,serif;color:var(--blue);font-size:20px;margin:0 0 14px;background:#fff;border-radius:12px;padding:12px 18px;box-shadow:0 6px 18px rgba(15,59,89,.08);display:flex;align-items:center;gap:10px}
+.sec:before{content:"";width:22px;height:2px;background:var(--gold)}
+.qt{font-weight:600;font-size:16px;line-height:1.45;margin:0 0 4px;color:var(--blue2)}
+.hint{font-size:12px;color:var(--steel);margin-bottom:14px;text-transform:uppercase;letter-spacing:.6px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.opt{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1.5px solid #e4ded6;border-radius:10px;cursor:pointer;font-size:14.5px;background:#fff;text-align:left;font-family:inherit;color:inherit;transition:all .15s}
+.opt:hover{border-color:var(--steel)}
+.opt .box{flex:none;width:18px;height:18px;border:2px solid var(--steel);border-radius:5px;display:grid;place-items:center}
+.opt.radio .box{border-radius:50%}
+.opt.on{border-color:var(--blue);background:#eef3f7}
+.opt.on .box{background:var(--blue);border-color:var(--blue)}
+.opt.on .box:after{content:"";width:8px;height:8px;background:var(--gold);border-radius:2px}
+.opt.radio.on .box:after{border-radius:50%}
+.opt.dim{opacity:.45}
+.rows{display:flex;flex-direction:column;gap:2px}
+.row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:10px 6px;border-bottom:1px solid #efeae4}
+.row:last-child{border-bottom:0}
+.row .t{font-size:14.5px;line-height:1.4}
+.row.miss .t{color:var(--err)}
+.pills{display:flex;gap:6px}
+.pill{border:1.5px solid #e0d9d0;background:#fff;border-radius:999px;padding:7px 14px;font:600 13px Inter,sans-serif;color:var(--coffee);cursor:pointer;min-width:64px}
+.pill.on.tr{background:var(--blue);border-color:var(--blue);color:#fff}
+.pill.on.fa{background:var(--coffee);border-color:var(--coffee);color:#fff}
+.dots{display:flex;gap:6px}
+.dot{width:36px;height:36px;border-radius:50%;border:1.5px solid #e0d9d0;background:#fff;font:600 13px Inter,sans-serif;color:var(--coffee);cursor:pointer}
+.dot.on{background:var(--gold);border-color:var(--gold);color:var(--blue2)}
+.scale{display:flex;justify-content:flex-end;gap:8px;font-size:11px;color:var(--steel);margin:-6px 0 4px;text-transform:uppercase;letter-spacing:.5px}
+@media(max-width:560px){.row{grid-template-columns:1fr}.pills,.dots{justify-content:flex-start}.scale{justify-content:flex-start}}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+.btn{border:0;border-radius:12px;padding:14px 24px;font:600 15px Inter,sans-serif;cursor:pointer}
+.btn.pri{background:var(--blue);color:#fff;box-shadow:0 6px 16px rgba(15,59,89,.25)}
+.btn.pri:hover{background:var(--blue2)}
+.btn.gold{background:var(--gold);color:var(--blue2)}
+.btn.ghost{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn:disabled{opacity:.55;cursor:wait}
+.err{color:var(--err);font-size:14px;margin-top:12px;text-align:right;min-height:18px}
+.center{text-align:center;padding:40px 24px}
+.center h2{font-family:Cinzel,serif;color:var(--blue);font-size:28px;margin:12px 0}
+.center p{line-height:1.6;color:#5a4a44}
+.badge{width:74px;height:74px;margin:0 auto;border-radius:50%;background:var(--blue);display:grid;place-items:center;box-shadow:0 0 0 6px rgba(219,161,44,.35)}
+.feats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:18px 0 6px}
+.feats span{background:#eef3f7;color:var(--blue);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:500}
+footer{text-align:center;color:var(--steel);font-size:12px;padding:0 16px 30px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <svg class="pyr" viewBox="0 0 200 120"><path d="M100 5 195 115H5Z" fill="none" stroke="#dba12c" stroke-width="1.5"/><path d="M100 5 120 115M100 5 70 115" stroke="#dba12c" stroke-width=".8"/></svg>
+  <div class="wrap">
+    <div class="logo">EGYPT 36<svg viewBox="0 0 40 40" aria-label="0"><circle cx="20" cy="20" r="17" fill="none" stroke="#dba12c" stroke-width="3"/><path d="M9 19c4-5 18-5 22 0-4 4-18 4-22 0Z" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="20" cy="19" r="2.6" fill="#dba12c"/><path d="M10 14.5c5-3 15-3 20 0" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><path d="M17 22.5l-1.5 7M23 22c3 1 5 4 3 6.5-1.5 1.8-4 .6-3-1.2" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <div class="tag">Your Egypt, your way</div>
+    <h1 id="htitle">Help us build the app every visitor to Egypt needs</h1>
+    <p id="hsub">A 5-minute survey for travellers and tourism service providers. Your answers are anonymous and are used for academic research only.</p>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="steplabel" id="steplabel">Welcome</div>
+  </div>
+</header>
+<main id="app"></main>
+<footer>Egypt 360 · Graduation Project · BIS Department, College of Management and Technology</footer>
+
+<script>var API = "https://script.google.com/macros/s/AKfycbyoE0EySbI-Tqp_wYwa36EXVY1a9FydLXvTjq8AvqLjZvRv9CtypNEttM0vKfFvW1H5/exec";
+var SURVEY = null;</script>
+<script>
+var answers = {}, path = [], step = 0;
+var $app = document.getElementById('app');
+var EYE = document.querySelector('.logo svg').outerHTML;
+
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function steps(){ // list of screens after intro
+  var s=[{title:'Getting Started',items:[SURVEY.start]}];
+  if(answers.role===SURVEY.start.options[0]) s=s.concat(SURVEY.traveller);
+  else if(answers.role) s=s.concat(SURVEY.partner);
+  return s;
+}
+function setProgress(){
+  var total=answers.role?steps().length:6;
+  document.getElementById('bar').style.width=(step<0?0:Math.round(step/total*100))+'%';
+}
+
+function intro(){
+  try{ if(localStorage.getItem('e360_done')) return thanks(true); }catch(e){}
+  step=-1; setProgress(); document.querySelector('.hero').classList.remove('compact');
+  document.getElementById('steplabel').textContent='Welcome';
+  $app.innerHTML='<div class="card center"><div class="badge">'+EYE.replace('<svg','<svg width="44" height="44"')+'</div>'+
+  '<h2>Plan. Book. Explore. Stay safe.</h2><p>Egypt 360 brings a whole trip into one app. Tell us what matters to you so we build the right features first and price them fairly.</p>'+
+  '<div class="feats">'+['Flights & hotels','Phone room key','AI trip planner','Drivers & guides','Virtual guide','Digital tickets','SOS button','24/7 chat'].map(function(f){return '<span>'+f+'</span>'}).join('')+'</div>'+
+  '<div class="nav" style="justify-content:center"><button class="btn gold" onclick="go(0)">Start the survey →</button></div></div>';
+}
+
+function render(){
+  var s=steps(), sec=s[step];
+  setProgress(); document.querySelector('.hero').classList.add('compact');
+  document.getElementById('steplabel').textContent='Step '+(step+1)+(answers.role?' of '+s.length:'')+' · '+sec.title;
+  var h='<div class="sec">'+esc(sec.title)+'</div>';
+  sec.items.forEach(function(q){h+=card(q)});
+  var last=step===s.length-1 && answers.role;
+  h+='<div class="nav">'+(step>0?'<button class="btn ghost" onclick="go(step-1)">← Back</button>':'<span></span>')+
+     '<button class="btn '+(last?'gold':'pri')+'" id="next" onclick="next()">'+(last?'Submit answers':'Continue →')+'</button></div><div class="err" id="err"></div>';
+  $app.innerHTML=h;
+}
+
+function card(q){
+  var hint={single:'Select one',multi:q.max?'Tick up to '+q.max:'Tick all that apply',tf:'True or false for each row',rate:'Rate each row from 1 to 5'}[q.type];
+  var h='<div class="card" id="c_'+q.id+'"><p class="qt">'+esc(q.q)+'</p><div class="hint">'+hint+'</div>';
+  var a=answers[q.id];
+  if(q.type==='single'||q.type==='multi'){
+    var full=q.type==='multi'&&q.max&&(a||[]).length>=q.max;
+    h+='<div class="opts">'+q.options.map(function(o,i){
+      var on=q.type==='single'?a===o:(a||[]).indexOf(o)>-1;
+      return '<button type="button" class="opt '+(q.type==='single'?'radio':'')+(on?' on':'')+(full&&!on?' dim':'')+'" onclick="pick(\''+q.id+'\','+i+')"><span class="box"></span>'+esc(o)+'</button>';
+    }).join('')+'</div>';
+  } else {
+    if(q.type==='rate') h+='<div class="scale"><span>1 = '+esc(q.scale[0])+'</span><span>5 = '+esc(q.scale[1])+'</span></div>';
+    h+='<div class="rows">'+q.rows.map(function(r,i){
+      var v=a&&a[i];
+      var ctl=q.type==='tf'
+        ?'<div class="pills"><button type="button" class="pill tr'+(v==='True'?' on':'')+'" onclick="setRow(\''+q.id+'\','+i+',\'True\')">True</button><button type="button" class="pill fa'+(v==='False'?' on':'')+'" onclick="setRow(\''+q.id+'\','+i+',\'False\')">False</button></div>'
+        :'<div class="dots">'+[1,2,3,4,5].map(function(n){return '<button type="button" class="dot'+(v===n?' on':'')+'" onclick="setRow(\''+q.id+'\','+i+','+n+')">'+n+'</button>'}).join('')+'</div>';
+      return '<div class="row" id="r_'+q.id+'_'+i+'"><div class="t">'+esc(r.t)+'</div>'+ctl+'</div>';
+    }).join('')+'</div>';
+  }
+  return h+'</div>';
+}
+
+function find(id){var all=[SURVEY.start];SURVEY.traveller.concat(SURVEY.partner).forEach(function(s){all=all.concat(s.items)});return all.filter(function(q){return q.id===id})[0]}
+function keepScroll(fn){var y=window.scrollY;fn();window.scrollTo(0,y)}
+function pick(id,i){
+  var q=find(id),o=q.options[i];
+  if(q.type==='single'){ if(id==='role'&&answers.role!==o){answers={};} answers[id]=o; }
+  else{ var a=answers[id]||[],k=a.indexOf(o); if(k>-1)a.splice(k,1); else{ if(q.max&&a.length>=q.max)return; a.push(o);} answers[id]=a; }
+  keepScroll(render);
+}
+function setRow(id,i,v){ answers[id]=answers[id]||{}; answers[id][i]=v; keepScroll(render); }
+
+function missing(q){
+  var a=answers[q.id];
+  if(q.type==='single') return !a;
+  if(q.type==='multi') return !a||!a.length;
+  var m=[]; q.rows.forEach(function(r,i){if(!a||a[i]===undefined)m.push(i)}); return m.length?m:false;
+}
+function next(){
+  var sec=steps()[step], first=null;
+  sec.items.forEach(function(q){
+    var m=missing(q), el=document.getElementById('c_'+q.id);
+    el.classList.toggle('missing',!!m);
+    if(Array.isArray(m)) m.forEach(function(i){document.getElementById('r_'+q.id+'_'+i).classList.add('miss')});
+    if(m&&!first) first=el;
+  });
+  if(first){ document.getElementById('err').textContent='Please answer the highlighted questions.'; first.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  if(step===steps().length-1&&answers.role) return submit();
+  go(step+1);
+}
+function go(n){ step=n; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+
+function submit(){
+  var b=document.getElementById("next"); b.disabled=true; b.textContent="Sending…";
+  fetch(API,{method:"POST",credentials:"omit",redirect:"follow",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(answers)})
+    .then(function(r){return r.json()})
+    .then(function(d){ if(!d||!d.ok) throw new Error(d&&d.error||"Server error"); try{localStorage.setItem("e360_done","1")}catch(e){} thanks(false); })
+    .catch(function(e){ b.disabled=false; b.textContent="Submit answers"; document.getElementById("err").textContent="Could not send: "+(e&&e.message||e)+". Please check your connection and try again."; });
+}
+function thanks(already){
+  document.querySelector('.hero').classList.add('compact');
+  step=steps().length; document.getElementById('bar').style.width='100%';
+  document.getElementById('steplabel').textContent='Complete';
+  $app.innerHTML='<div class="card center"><div class="badge">'+EYE.replace('<svg','<svg width="44" height="44"')+'</div><h2>Shukran — thank you!</h2><p>'+
+   (already?'You have already completed this survey on this device.':'Your answers have been recorded. They will directly shape which Egypt 360 features we build first.')+
+   '</p><p style="font-size:13px;color:#7d929e">Feel free to share this survey with friends who travel in Egypt.</p>'+
+   (already?'<div class="nav" style="justify-content:center"><button class="btn ghost" onclick="again()">Answer again (another person)</button></div>':'')+'</div>';
+}
+function again(){ try{localStorage.removeItem('e360_done')}catch(e){} answers={}; intro(); }
+function boot(n){ fetch(API+"?api=survey",{credentials:"omit"}).then(function(r){return r.json()}).then(function(d){ SURVEY=d.survey; intro(); }).catch(function(){ if(n<2) setTimeout(function(){boot(n+1)},1500); else $app.innerHTML='<div class="card center"><h2>Connection problem</h2><p>Please check your internet connection and reload this page.</p></div>'; }); }
+$app.innerHTML='<div class="card center"><p>Loading…</p></div>'; boot(0);
+</script>
+</body>
+</html>

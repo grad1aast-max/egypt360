@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f3b59">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Egypt 360 — Survey Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--blue:#0f3b59;--blue2:#0a2a40;--steel:#7d929e;--dust:#dbd4cc;--gold:#dba12c;--coffee:#3e251e;--bg:#f4f1ec;--ok:#2e7d5b;--warn:#c27c0e;--bad:#b3261e}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--coffee);-webkit-font-smoothing:antialiased}
+header{background:linear-gradient(160deg,var(--blue),var(--blue2));color:#fff;padding:18px 24px}
+.hwrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:2px;font-family:Cinzel,serif;font-weight:700;font-size:22px;letter-spacing:3px}
+.logo svg{width:26px;height:26px}
+.sub{color:var(--gold);font-size:11px;letter-spacing:2.5px;text-transform:uppercase}
+.hact{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px;color:#b9c9d4}
+.btn{border:0;border-radius:10px;padding:9px 14px;font:600 13px Inter,sans-serif;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.gold{background:var(--gold);color:var(--blue2)}
+.btn.line{background:transparent;border:1.5px solid rgba(255,255,255,.4);color:#fff}
+.btn.pri{background:var(--blue);color:#fff}
+.btn:disabled{opacity:.5;cursor:wait}
+nav.tabs{max-width:1200px;margin:0 auto;display:flex;gap:4px;padding:14px 24px 0;flex-wrap:wrap}
+.tab{border:0;background:transparent;padding:10px 16px;border-radius:10px 10px 0 0;font:600 14px Inter,sans-serif;color:var(--steel);cursor:pointer;border-bottom:3px solid transparent}
+.tab.on{color:var(--blue);border-bottom-color:var(--gold)}
+main{max-width:1200px;margin:0 auto;padding:16px 24px 60px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}
+.kpi{background:#fff;border-radius:14px;padding:16px;box-shadow:0 6px 18px rgba(15,59,89,.07)}
+.kpi b{display:block;font-size:28px;color:var(--blue);font-weight:700}
+.kpi span{font-size:12px;color:var(--steel);text-transform:uppercase;letter-spacing:.6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(460px,1fr));gap:16px}
+@media(max-width:560px){.grid{grid-template-columns:1fr}main{padding:12px}}
+.card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 6px 18px rgba(15,59,89,.07)}
+.card h3{margin:0 0 4px;font-size:15px;color:var(--blue2);line-height:1.4}
+.card .meta{font-size:12px;color:var(--steel);margin-bottom:10px}
+.card.wide{grid-column:1/-1}
+h2{font-family:Cinzel,serif;color:var(--blue);font-size:20px;margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+h2:before{content:"";width:22px;height:2px;background:var(--gold)}
+.ins{display:flex;gap:12px;padding:12px 4px;border-bottom:1px solid #efeae4;align-items:flex-start}
+.ins:last-child{border-bottom:0}
+.lvl{flex:none;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:4px 8px;border-radius:6px;min-width:84px;text-align:center}
+.lvl.s{background:#e3f1ea;color:var(--ok)}.lvl.m{background:#fbefd9;color:var(--warn)}.lvl.w{background:#f6e2e0;color:var(--bad)}.lvl.i{background:#e6edf2;color:var(--blue)}
+.ins p{margin:0;line-height:1.5;font-size:14.5px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0 4px;font-size:13px}
+select{font:500 13px Inter,sans-serif;padding:8px 10px;border-radius:9px;border:1.5px solid var(--dust);background:#fff;color:var(--coffee)}
+table.mos{width:100%;border-collapse:collapse;font-size:13.5px}
+table.mos td,table.mos th{padding:8px;border-bottom:1px solid #efeae4;text-align:left}
+table.mos th{color:var(--steel);font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.tagm{font-weight:700;font-size:11px;padding:3px 7px;border-radius:5px}
+.M{background:#0f3b59;color:#fff}.S{background:#dba12c;color:#0a2a40}.C{background:#dbd4cc;color:#3e251e}.W{background:#f1eeea;color:#7d929e}
+.gate{max-width:380px;margin:80px auto;text-align:center}
+.gate input{width:100%;padding:13px;border-radius:10px;border:1.5px solid var(--dust);font:15px Inter,sans-serif;margin:16px 0 10px}
+.err{color:var(--bad);font-size:13px;min-height:18px}
+.empty{text-align:center;padding:50px 20px;color:var(--steel)}
+#ai{line-height:1.6;font-size:14.5px}
+#ai h4{font-family:Cinzel,serif;color:var(--blue);margin:18px 0 6px;font-size:16px}
+#ai ul{margin:4px 0 8px 20px;padding:0}
+.chartbox{position:relative}
+</style>
+</head>
+<body>
+<header><div class="hwrap">
+  <div><div class="logo">EGYPT 36<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="none" stroke="#dba12c" stroke-width="3"/><path d="M9 19c4-5 18-5 22 0-4 4-18 4-22 0Z" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="20" cy="19" r="2.6" fill="#dba12c"/><path d="M10 14.5c5-3 15-3 20 0" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><path d="M17 22.5l-1.5 7M23 22c3 1 5 4 3 6.5-1.5 1.8-4 .6-3-1.2" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+  <div class="sub">Survey analysis · private</div></div>
+  <div class="hact" id="hact" style="display:none"><span id="updated"></span>
+    <button class="btn line" onclick="load()">↻ Refresh</button><a class="btn gold" id="sheet" target="_blank" href="#">Open Google Sheet</a></div>
+</div></header>
+<nav class="tabs" id="tabs" style="display:none"></nav>
+<main id="app"></main>
+
+<script>var API = "https://script.google.com/macros/s/AKfycbyoE0EySbI-Tqp_wYwa36EXVY1a9FydLXvTjq8AvqLjZvRv9CtypNEttM0vKfFvW1H5/exec";
+var SURVEY = null;
+function api(payload){ return fetch(API,{method:"POST",credentials:"omit",redirect:"follow",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)}).then(function(r){return r.json()}).then(function(d){ if(!d||!d.ok) throw new Error(d&&d.error||"Server error"); return d; }); }</script>
+<script>
+var PW='', DATA=null, TAB='overview', SEG='all', charts=[];
+var C={blue:'#0f3b59',gold:'#dba12c',steel:'#7d929e',dust:'#dbd4cc',coffee:'#3e251e'};
+var PALETTE=['#0f3b59','#dba12c','#7d929e','#3e251e','#3d7ea6','#e8c676','#a9b8c0','#8a5a44','#1d5a83','#c9a15a'];
+var $app=document.getElementById('app');
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function Q(id){var all=[SURVEY.start];SURVEY.traveller.concat(SURVEY.partner).forEach(function(s){all=all.concat(s.items)});return all.filter(function(q){return q.id===id})[0]}
+function pct(n,d){return d?Math.round(n/d*100):0}
+
+/* ---------- auth ---------- */
+function gate(msg){
+  $app.innerHTML='<div class="gate card"><h3 style="font-family:Cinzel,serif;font-size:20px;color:#0f3b59">Analysis dashboard</h3><p style="color:#7d929e;font-size:14px">This page is private. Enter the analysis password.</p>'+
+  '<form onsubmit="event.preventDefault();PW=this.pw.value;load()"><input name="pw" type="password" placeholder="Password" autofocus><button class="btn pri" style="width:100%;padding:13px">Open dashboard</button></form><div class="err">'+(msg||'')+'</div></div>';
+}
+function load(){
+  if(!PW){try{PW=sessionStorage.getItem('e360_pw')||''}catch(e){}}
+  if(!PW) return gate();
+  if(!DATA) $app.innerHTML='<div class="empty">Loading responses…</div>';
+  api({action:"results",pw:PW}).then(function(r){ var d=r.data;
+    try{sessionStorage.setItem('e360_pw',PW)}catch(e){}
+    DATA=d; document.getElementById('hact').style.display='flex'; document.getElementById('tabs').style.display='flex';
+    document.getElementById('sheet').href=d.sheetUrl; document.getElementById('updated').textContent='Updated '+new Date().toLocaleTimeString();
+    draw();
+  }).catch(function(e){ PW=''; try{sessionStorage.removeItem('e360_pw')}catch(x){} gate(e&&e.message||'Could not load'); });
+}
+setInterval(function(){ if(DATA&&PW&&document.visibilityState==='visible') load(); },120000);
+
+/* ---------- stats ---------- */
+function rowsFor(role){
+  var r=DATA.rows.filter(function(x){return role==='t'?x.role===SURVEY.start.options[0]:x.role&&x.role!==SURVEY.start.options[0]});
+  if(role==='t'&&SEG!=='all') r=r.filter(function(x){return x.t_type===SEG});
+  return r;
+}
+function stat(q,rows){
+  if(q.type==='single'||q.type==='multi'){
+    var cnt={},n=0; q.options.forEach(function(o){cnt[o]=0});
+    rows.forEach(function(r){var v=r[q.id]; if(v===''||v==null)return; n++;
+      (q.type==='multi'?String(v).split('; '):[String(v)]).forEach(function(o){if(cnt[o]!==undefined)cnt[o]++;});});
+    var list=q.options.map(function(o){return{label:o,count:cnt[o],pct:pct(cnt[o],n)}});
+    var sorted=list.slice().sort(function(a,b){return b.count-a.count});
+    return{n:n,list:list,top:sorted[0],sorted:sorted};
+  }
+  var out=q.rows.map(function(row,i){
+    var vals=rows.map(function(r){return r[q.id+'__'+i]}).filter(function(v){return v!==''&&v!=null});
+    if(q.type==='tf'){var t=vals.filter(function(v){return String(v).toLowerCase()==='true'}).length;return{label:row.t,imp:row.imp,n:vals.length,pctTrue:pct(t,vals.length)};}
+    var nums=vals.map(Number).filter(function(v){return v>=1&&v<=5});
+    var sum=nums.reduce(function(a,b){return a+b},0);
+    return{label:row.t,n:nums.length,avg:nums.length?sum/nums.length:0,top2:pct(nums.filter(function(v){return v>=4}).length,nums.length),
+      dist:[1,2,3,4,5].map(function(k){return nums.filter(function(v){return v===k}).length})};
+  });
+  return{rows:out,n:Math.max.apply(null,out.map(function(o){return o.n}).concat(0))};
+}
+function median(list){ // list of {label,count} in option order -> label of median respondent
+  var tot=list.reduce(function(a,b){return a+b.count},0),acc=0;
+  for(var i=0;i<list.length;i++){acc+=list[i].count;if(acc>=tot/2)return list[i].label}
+  return '—';
+}
+
+/* ---------- insights ---------- */
+function lvl(p,hi,mid){return p>=hi?'s':p>=mid?'m':'w'}
+var LV={s:'Strong',m:'Moderate',w:'Weak',i:'Info'};
+var WORRY={
+ 'Privacy of my personal data':'publish a clear privacy notice, ask consent for location, and encrypt personal data (Egyptian data-protection law).',
+ 'Payment security':'use a PCI-DSS certified gateway with 3-D Secure and show trusted payment badges at checkout.',
+ 'Fake or misleading listings':'verify every hotel, agency and partner before listing and show a "Verified" badge.',
+ 'Unreliable drivers or guides':'licence checks, ratings, live driver tracking and a no-show refund policy.',
+ 'Hidden fees':'show the all-in price (fees included) before payment.',
+ 'AI giving wrong information':'keep AI itineraries editable, link to sources, and offer 24/7 human chat as fallback.'};
+function insights(){
+  var out=[], T=rowsFor('t'), P=rowsFor('p'), n=T.length;
+  function add(group,l,text){out.push({g:group,l:l,t:text})}
+  if(n<30) add('Data quality','w','Only '+n+' traveller response'+(n===1?'':'s')+(SEG!=='all'?' in this segment':'')+'. Results are indicative — aim for at least 30 (ideally 100+) before drawing firm conclusions.');
+  if(!n&&!P.length) return out;
+  if(n){
+    stat(Q('t_pain'),T).rows.forEach(function(r){ if(!r.n)return; var L=lvl(r.pctTrue,60,40);
+      add('Problem validation',L, r.pctTrue+'% said true: "'+r.label+'". '+(L==='w'?'Weak evidence — this problem may be less common than assumed; reconsider its priority.':'→ '+cap(r.imp)+'.'));});
+    var f=stat(Q('t_feat'),T).rows.filter(function(r){return r.n}).sort(function(a,b){return b.avg-a.avg});
+    if(f.length){
+      add('Product priorities','s','Highest-rated features: '+f.slice(0,3).map(function(r){return r.label+' ('+r.avg.toFixed(1)+'/5)'}).join(', ')+'. → Put these in the first release.');
+      var low=f.filter(function(r){return r.avg<3});
+      if(low.length) add('Product priorities','m','Rated below 3/5: '+low.map(function(r){return r.label+' ('+r.avg.toFixed(1)+')'}).join(', ')+'. → Move to a later phase or rethink how they are presented.');
+    }
+    var t3=stat(Q('t_top3'),T); if(t3.n) add('Product priorities','i','Most picked in the "top 3" list: '+t3.sorted.slice(0,3).map(function(o){return o.label+' ('+o.pct+'%)'}).join(', ')+'.');
+    stat(Q('t_trust'),T).rows.forEach(function(r){ if(!r.n)return; var L=lvl(r.pctTrue,60,40);
+      add('Adoption & requirements',L, r.pctTrue+'% agree: "'+r.label+'". '+(L==='w'?'Low acceptance — treat this as a risk and plan how to build trust.':'→ '+cap(r.imp)+'.'));});
+    var w=stat(Q('t_worry'),T); if(w.n) add('Adoption & requirements','i','Top concern: '+w.top.label+' ('+w.top.pct+'%). → Requirement: '+WORRY[w.top.label]);
+    var pay=stat(Q('t_pay'),T); if(pay.n) add('Revenue model','i','Preferred payment: '+pay.sorted.slice(0,3).map(function(o){return o.label+' ('+o.pct+'%)'}).join(', ')+'. → The payment gateway must support these at launch.');
+    var fee=stat(Q('t_fee'),T); if(fee.n){var acc=100-fee.list[0].pct; add('Revenue model',lvl(acc,60,40),acc+'% would accept a booking service fee; most common answer "'+fee.top.label+'". '+(acc>=50?'→ A small per-booking fee is viable.':'→ Rely more on partner commission than on traveller fees.'));}
+    var pr=stat(Q('t_premium'),T); if(pr.n){var sub=100-pr.list[0].pct, subs=pr.list.slice(1); add('Revenue model',lvl(sub,40,20),sub+'% would pay for Premium'+(sub?'; median price among them: '+median(subs):'')+'. '+(sub>=25?'→ Premium subscription is a realistic extra revenue stream.':'→ Keep Premium optional and low priority.'));}
+    var pm=stat(Q('t_promo'),T); if(pm.n){var ok=pm.list[0].pct+pm.list[1].pct; add('Revenue model',lvl(ok,70,50),ok+'% accept labelled promoted content ('+pm.list[1].pct+'% only if relevant); '+pm.list[2].pct+'% dislike it. → '+(ok>=60?'Promoted placements are acceptable — keep them relevant and clearly labelled.':'Use promoted placements sparingly; they risk churn.'));}
+    var it=stat(Q('t_intent'),T).rows; if(it[0].n){add('Demand',lvl(it[0].top2,60,40),it[0].top2+'% are likely (4–5) to use Egypt 360 on their next trip (average '+it[0].avg.toFixed(1)+'/5).'); add('Demand',lvl(it[1].top2,60,40),it[1].top2+'% are likely to recommend it (average '+it[1].avg.toFixed(1)+'/5).');}
+    var bk=stat(Q('t_booking'),T); if(bk.n){var after=bk.list[1].pct+bk.list[2].pct; add('Audience','i',after+'% book some or most services after arriving → on-the-ground features (drivers, guides, tickets, map) matter as much as pre-trip booking.');}
+    var wt=stat(Q('t_with'),T); if(wt.n){var d=wt.list[5].pct,pet=wt.list[6].pct,fam=wt.list[2].pct; add('Audience','i',fam+'% travel with children, '+d+'% with someone with a disability and '+pet+'% with a pet → '+(d+pet>=15?'the accessibility and pet options in the AI planner are justified.':'accessibility and pet options are a niche; keep them simple.'));}
+    var pu=stat(Q('t_purpose'),T); if(pu.n) add('Audience','i','Main trip purposes: '+pu.sorted.slice(0,3).map(function(o){return o.label+' ('+o.pct+'%)'}).join(', ')+' → design the AI planner\'s default trip types around these.');
+    var lg=stat(Q('t_lang'),T); if(lg.n) add('Audience','i','Preferred app languages: '+lg.sorted.filter(function(o){return o.count}).slice(0,4).map(function(o){return o.label+' ('+o.pct+'%)'}).join(', ')+'.');
+  }
+  if(P.length){
+    if(P.length<10) add('Partners','w','Only '+P.length+' partner response'+(P.length===1?'':'s')+' — collect more from hotels, drivers and guides.');
+    stat(Q('p_ready'),P).rows.forEach(function(r){ if(!r.n)return; var L=lvl(r.pctTrue,60,40); add('Partners',L,r.pctTrue+'% of partners: "'+r.label+'". '+(L==='w'?'Low — a risk for this part of the plan.':'→ '+cap(r.imp)+'.'));});
+    var cm=stat(Q('p_commission'),P); if(cm.n){var ten=cm.list[2].pct+cm.list[3].pct; add('Partners','i','Most acceptable commission: '+cm.top.label+' ('+cm.top.pct+'%); '+ten+'% accept 10% or more. → Set the launch commission at or below '+median(cm.list)+'.');}
+    var po=stat(Q('p_payout'),P); if(po.n) add('Partners','i','Preferred payout: '+po.top.label+' ('+po.top.pct+'%). → Design the payout cycle and finance module around this.');
+    var ba=stat(Q('p_barrier'),P); if(ba.n) add('Partners','i','Biggest barrier to joining: '+ba.top.label+' ('+ba.top.pct+'%). → Address this first in the partner onboarding pitch.');
+    var be=stat(Q('p_benefit'),P).rows.filter(function(r){return r.n}).sort(function(a,b){return b.avg-a.avg}); if(be.length) add('Partners','s','Most valued partner benefits: '+be.slice(0,2).map(function(r){return r.label+' ('+r.avg.toFixed(1)+'/5)'}).join(' and ')+' → lead the partner value proposition with these.');
+  }
+  return out;
+}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function moscow(f){return f>=4?'M':f>=3.5?'S':f>=3?'C':'W'}
+var MOS={M:'Must have',S:'Should have',C:'Could have',W:"Won't have (yet)"};
+
+/* ---------- charts ---------- */
+function killCharts(){charts.forEach(function(c){c.destroy()});charts=[]}
+function bar(el,labels,data,opt){
+  opt=opt||{};
+  charts.push(new Chart(el,{type:'bar',data:{labels:labels,datasets:opt.sets||[{data:data,backgroundColor:opt.colors||C.blue,borderRadius:5,maxBarThickness:26}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,animation:{duration:500},
+      plugins:{legend:{display:!!opt.sets,position:'bottom',labels:{boxWidth:12,font:{family:'Inter'}}},tooltip:{callbacks:{label:function(c){return (opt.sets?c.dataset.label+': ':'')+c.raw+(opt.unit||'%')}}}},
+      scales:{x:{stacked:!!opt.stacked,max:opt.max||100,min:opt.min||0,grid:{color:'#f0ebe5'},ticks:{font:{family:'Inter',size:11},callback:function(v){return v+(opt.unit||'%')}}},
+              y:{stacked:!!opt.stacked,grid:{display:false},ticks:{font:{family:'Inter',size:11.5},color:C.coffee,callback:function(v){var l=this.getLabelForValue(v);return l.length>64?l.slice(0,62)+'…':l}}}}}}));
+}
+function qCard(q,rows,wide){
+  var s=stat(q,rows), id='ch_'+q.id, h, rowsN=(q.options||q.rows).length;
+  var height=Math.max(140,rowsN*(q.type==='tf'?34:30)+50);
+  var meta={single:'Select one · % of respondents',multi:'Tick all · % of respondents who ticked each',tf:'True/False · share answering True',rate:'Average rating (1–5)'}[q.type];
+  h='<div class="card'+(wide?' wide':'')+'"><h3>'+esc(q.q)+'</h3><div class="meta">'+meta+' · n = '+s.n+'</div><div class="chartbox" style="height:'+height+'px"><canvas id="'+id+'"></canvas></div></div>';
+  return {html:h,draw:function(){
+    var el=document.getElementById(id); if(!el)return;
+    if(q.type==='single'||q.type==='multi') bar(el,s.list.map(function(o){return o.label}),s.list.map(function(o){return o.pct}),{colors:s.list.map(function(o){return o===s.top&&o.count?C.gold:C.blue})});
+    else if(q.type==='tf') bar(el,s.rows.map(function(r){return r.label}),null,{stacked:true,sets:[
+      {label:'True',data:s.rows.map(function(r){return r.pctTrue}),backgroundColor:C.blue,borderRadius:4,maxBarThickness:22},
+      {label:'False',data:s.rows.map(function(r){return r.n?100-r.pctTrue:0}),backgroundColor:C.dust,borderRadius:4,maxBarThickness:22}]});
+    else { var srt=s.rows.slice().sort(function(a,b){return b.avg-a.avg});
+      bar(el,srt.map(function(r){return r.label}),srt.map(function(r){return +r.avg.toFixed(2)}),{max:5,unit:'',colors:srt.map(function(r){return r.avg>=4?C.blue:r.avg>=3.5?C.gold:r.avg>=3?C.steel:C.dust})}); }
+  }};
+}
+
+/* ---------- views ---------- */
+function tabs(){
+  var t=[['overview','Overview & insights'],['travellers','Travellers'],['partners','Partners'],['ai','AI summary']];
+  document.getElementById('tabs').innerHTML=t.map(function(x){return '<button class="tab'+(TAB===x[0]?' on':'')+'" onclick="TAB=\''+x[0]+'\';draw()">'+x[1]+'</button>'}).join('');
+}
+function segFilter(){
+  return '<div class="filters"><span style="color:#7d929e">Traveller segment:</span><select onchange="SEG=this.value;draw()">'+
+    ['all'].concat(Q('t_type').options).map(function(o){return '<option value="'+esc(o)+'"'+(SEG===o?' selected':'')+'>'+(o==='all'?'All travellers':esc(o))+'</option>'}).join('')+'</select></div>';
+}
+function draw(){
+  killCharts(); tabs();
+  var all=DATA.rows, T=rowsFor('t'), P=rowsFor('p'), drawers=[], h='';
+  if(!all.length){ $app.innerHTML='<div class="card empty"><h3>No responses yet</h3><p>Share the survey link. This page refreshes every 2 minutes.</p></div>'; return; }
+  if(TAB==='overview'){
+    var wk=all.filter(function(r){return r.timestamp&&(Date.now()-new Date(r.timestamp))<7*864e5}).length;
+    var it=stat(Q('t_intent'),T).rows[0], fee=stat(Q('t_fee'),T), join=stat(Q('p_ready'),P).rows[0];
+    h+='<div class="kpis">'+kpi(all.length,'Total responses')+kpi(rowsFor('t').length,'Travellers')+kpi(P.length,'Service providers')+kpi(wk,'Last 7 days')+
+       kpi(it.n?it.top2+'%':'—','Likely to use (4–5)')+kpi(fee.n?(100-fee.list[0].pct)+'%':'—','Accept a service fee')+kpi(join.n?join.pctTrue+'%':'—','Partners would join')+'</div>';
+    h+=segFilter();
+    var ins=insights(), groups=[];
+    ins.forEach(function(i){if(groups.indexOf(i.g)<0)groups.push(i.g)});
+    groups.forEach(function(g){
+      h+='<h2>'+g+'</h2><div class="card">'+ins.filter(function(i){return i.g===g}).map(function(i){return '<div class="ins"><span class="lvl '+i.l+'">'+LV[i.l]+'</span><p>'+esc(i.t)+'</p></div>'}).join('')+'</div>';
+      if(g==='Product priorities'){
+        var f=stat(Q('t_feat'),T).rows.filter(function(r){return r.n}).sort(function(a,b){return b.avg-a.avg});
+        if(f.length) h+='<div class="card" style="margin-top:12px"><h3>Feature priority (MoSCoW from average usefulness)</h3><div class="meta">≥ 4.0 Must · 3.5–3.9 Should · 3.0–3.4 Could · &lt; 3.0 Won\'t (yet)</div><table class="mos"><tr><th>Feature</th><th>Avg</th><th>Rated 4–5</th><th>Priority</th></tr>'+
+          f.map(function(r){var m=moscow(r.avg);return '<tr><td>'+esc(r.label)+'</td><td>'+r.avg.toFixed(2)+'</td><td>'+r.top2+'%</td><td><span class="tagm '+m+'">'+MOS[m]+'</span></td></tr>'}).join('')+'</table></div>';
+      }
+    });
+  } else if(TAB==='travellers'){
+    h+=segFilter();
+    if(!T.length) h+='<div class="card empty">No traveller responses in this segment yet.</div>';
+    else SURVEY.traveller.forEach(function(sec){
+      h+='<h2>'+esc(sec.title)+'</h2><div class="grid">';
+      sec.items.forEach(function(q){var c=qCard(q,T,q.type==='tf'||q.type==='rate'||(q.options&&q.options.length>8));h+=c.html;drawers.push(c.draw)});
+      h+='</div>';
+    });
+  } else if(TAB==='partners'){
+    if(!P.length) h+='<div class="card empty">No service-provider responses yet.</div>';
+    else SURVEY.partner.forEach(function(sec){
+      h+='<h2>'+esc(sec.title)+' · '+P.length+' responses</h2><div class="grid">';
+      sec.items.forEach(function(q){var c=qCard(q,P,q.type==='tf'||q.type==='rate');h+=c.html;drawers.push(c.draw)});
+      h+='</div>';
+    });
+  } else {
+    h+=segFilter()+'<div class="card"><h3>AI analyst summary</h3><div class="meta">Gemini reads the aggregated numbers below (no personal data) and writes a business & systems analysis.</div>'+
+      (DATA.aiEnabled?'<button class="btn pri" id="aibtn" onclick="runAI()">Generate summary</button>':'<p style="color:#b3261e;font-size:14px">AI summary is off. Add a GEMINI_API_KEY in the script\'s Project Settings ▸ Script Properties to turn it on.</p>')+
+      ' <button class="btn" style="background:#eef3f7;color:#0f3b59" onclick="copyStats(this)">Copy statistics</button><div id="ai" style="margin-top:14px"></div></div>';
+  }
+  $app.innerHTML=h;
+  drawers.forEach(function(d){d()});
+}
+function kpi(v,l){return '<div class="kpi"><b>'+v+'</b><span>'+l+'</span></div>'}
+
+/* ---------- AI ---------- */
+function statsText(){
+  var T=rowsFor('t'),P=rowsFor('p'),lines=['Segment: '+(SEG==='all'?'all travellers':SEG),'Traveller responses: '+T.length,'Partner responses: '+P.length,''];
+  function dump(sections,rows,who){ sections.forEach(function(sec){sec.items.forEach(function(q){var s=stat(q,rows);
+    lines.push('['+who+'] '+q.q+' (n='+s.n+')');
+    if(s.list) s.list.forEach(function(o){lines.push('  - '+o.label+': '+o.pct+'%')});
+    else s.rows.forEach(function(r){lines.push('  - '+r.label+': '+(q.type==='tf'?r.pctTrue+'% true':'avg '+r.avg.toFixed(2)+'/5, '+r.top2+'% rated 4-5'))});
+  })}); }
+  if(T.length) dump(SURVEY.traveller,T,'Traveller');
+  if(P.length) dump(SURVEY.partner,P,'Partner');
+  return lines.join('\n');
+}
+function copyStats(b){ try{navigator.clipboard.writeText(statsText()).then(function(){b.textContent='Copied ✓'},function(){b.textContent='Copy blocked'})}catch(e){b.textContent='Copy blocked'} }
+function runAI(){
+  var b=document.getElementById('aibtn'); b.disabled=true; b.textContent='Analysing…';
+  api({action:"ai",pw:PW,stats:statsText()}).then(function(r){ b.disabled=false; b.textContent='Regenerate'; document.getElementById('ai').innerHTML=md(r.text); })
+   .catch(function(e){ b.disabled=false; b.textContent='Try again'; document.getElementById('ai').innerHTML='<p class="err">'+esc(e&&e.message||e)+'</p>'; })
+}
+function md(t){
+  var out='',inList=false;
+  esc(t).split('\n').forEach(function(l){
+    l=l.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+    var m;
+    if((m=l.match(/^\s*#{1,4}\s*(.+)/))){ if(inList){out+='</ul>';inList=false} out+='<h4>'+m[1]+'</h4>'; }
+    else if((m=l.match(/^\s*[-*•]\s+(.+)/))){ if(!inList){out+='<ul>';inList=true} out+='<li>'+m[1]+'</li>'; }
+    else if(l.trim()){ if(inList){out+='</ul>';inList=false} out+='<p>'+l+'</p>'; }
+  });
+  return out+(inList?'</ul>':'');
+}
+function boot(n){ fetch(API+"?api=survey",{credentials:"omit"}).then(function(r){return r.json()}).then(function(d){ SURVEY=d.survey; load(); }).catch(function(){ if(n<2) setTimeout(function(){boot(n+1)},1500); else $app.innerHTML='<div class="card center"><h2>Connection problem</h2><p>Please check your internet connection and reload this page.</p></div>'; }); }
+$app.innerHTML='<div class="card center"><p>Loading…</p></div>'; boot(0);
+</script>
+</body>
+</html>
